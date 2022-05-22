@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.nav-item-bar {
+  position: sticky;
+  margin-top: 2em;
+  top: 1em;
+  
+  &__container {
+    @extend .baseline-with-space;
+  }
+
+  &__count {
+    padding: $box-padding;
+  }
+
+  &__categories {
+    @extend .center-with-space;
+  }
+}

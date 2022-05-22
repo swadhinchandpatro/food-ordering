@@ -1,0 +1,33 @@
+@import "./styles/variables";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', Helvetica,Arial,sans-serif;
+}
+
+.content-padding {
+  padding: $content-padding;
+}
+
+.page-layout {
+  position: relative;
+}
+
+.grid {
+  display: grid;
+  grid-gap: 16px;
+
+  @media (min-width: $small) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $medium) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: $large) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

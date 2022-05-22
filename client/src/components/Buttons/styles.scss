@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.category {
+  border: 0;
+  color: $unselected;
+  padding: $box-padding 1em;
+  padding-bottom: calc($box-padding + $box-padding);
+  cursor: pointer;
+
+  &:focus, &:hover {
+    color: $orange;
+  }
+}
+
+.selected {
+  color: $selected;
+  border-bottom: 1px solid $selected;
+}

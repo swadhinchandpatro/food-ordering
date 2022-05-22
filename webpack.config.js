@@ -12,14 +12,38 @@ module.exports = {
       template: './server/views/index.html'
     })
   ],
+  resolve: {
+    extensions: ['.jsx', '.js', '.json']
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: '/node_modules/',
         use: {
           loader: 'babel-loader',
         }
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        exclude: '/node_modules/',
+        use: [
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.svg$/,
+        exclude: '/node_modules/',
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
       }
     ]
   }

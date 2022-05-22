@@ -1,0 +1,30 @@
+@import "../../styles/variables";
+
+.header {
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 15px 40px -20px rgb(40 44 63 / 15%);
+  color: $selected;
+
+  &__container {
+    @extend .center-with-space;
+    padding: $header-padding;
+  }
+
+  &__links-group {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    letter-spacing: 0.12em;
+  }
+
+  a, a:hover, a:focus, a:visited {
+    text-decoration: none;
+    margin-right: 1.7em;
+  }
+
+  a:hover {
+    color: $orange;
+  }
+}
