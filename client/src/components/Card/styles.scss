@@ -1,0 +1,111 @@
+@import "../../styles/variables";
+
+.card-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 2em;
+  padding: $header-padding;
+
+  .text-info {
+    line-height: 1em;
+    font-size: 0.8em;
+    color: $unselected;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    max-height: 300px;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $header-padding;
+    align-items: baseline;
+  }
+
+  // &__badge {
+  //   position: absolute;
+  //   left: -8px;
+  //   top: 0;
+  //   background-color: #8a584b;
+  //   color: #fff;
+  //   font-size: 13px;
+  //   font-weight: 500;
+  //   padding: 5px 9px 4px;
+  //   max-width: 50%;
+  //   text-transform: uppercase;
+  //   border-color: #8a584b;
+
+  //   &__text {
+  //     text-overflow: ellipsis;
+  //     overflow: hidden;
+  //     white-space: nowrap;
+  //   }
+
+  //   &:before {
+  //     position: absolute;
+  //     bottom: -9px;
+  //     content: "";
+  //     width: 0;
+  //     height: 0;
+  //     border-style: solid;
+  //     border-color: inherit;
+  //     left: 0;
+  //     border-width: 9px 0 0 9px;
+  //   }
+  // }
+
+  &:hover {
+    border: 1px solid $border-light;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  }
+
+  &:hover &__menu {
+    opacity: 1;
+  }
+
+  &__menu {
+    @extend .center;
+    border-top: 1px solid $border-light;
+    margin-top: $header-padding;
+    padding-top: $box-padding;
+    opacity: 0;
+    
+    a {
+      color: $blue;
+      font-weight: 500;
+    }
+
+    @media (max-width: $medium) {
+      display: none;
+    }
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: rgb(84, 193, 84);
+    color: white;
+    height: 1.7em;
+    border-radius: 5px;
+    font-size: small;
+  }
+}
+
+.count-card {
+  @extend .center;
+  border: 1px solid $border-light;
+  line-height: 2em;
+  padding: $header-padding;
+
+  .text-info {
+    line-height: 2em;
+    font-size: 1.5em;
+    color: $orange;
+  }
+}

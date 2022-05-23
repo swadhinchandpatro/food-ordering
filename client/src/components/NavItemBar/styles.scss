@@ -1,9 +1,14 @@
 @import "../../styles/variables";
 
 .nav-item-bar {
-  position: sticky;
+  position: relative;
   margin-top: 2em;
   top: 1em;
+
+  @media (max-width: $medium) {
+    width: 100%;
+    padding: 0;
+  }
   
   &__container {
     @extend .baseline-with-space;
@@ -11,9 +16,25 @@
 
   &__count {
     padding: $box-padding;
+
+    @media (max-width: $medium) {
+      display: none;
+    }
   }
 
   &__categories {
     @extend .center-with-space;
   }
+  
+}
+
+.sticky {
+  position: sticky;
+  z-index: 9999;
+  background-color: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 15px 40px -20px rgb(40 44 63 / 15%);
+  color: $selected;
 }

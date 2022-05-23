@@ -12,9 +12,9 @@ const Header = () => {
         </div>
         <div className="header__links-group">
           <a href="#">Search</a>
-          <a href="#">Offers</a>
-          <a href="#">Help</a>
-          <a href="#">Swadhin</a>
+          <a href="#" className="hide-on-mobile">Offers</a>
+          <a href="#" className="hide-on-mobile">Help</a>
+          <a href="#" className="hide-on-mobile">Swadhin</a>
           <a href="#">Cart</a>
         </div>
       </div>

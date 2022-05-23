@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  justify-content: center;
+  align-items: start;
+  box-shadow: 0px -4px 3px rgb(40 44 63 / 15%);
+  z-index: 999;
+  background-color: white;
+
+  div {
+    @extend .center;
+    padding: 2em;
+  }
+
+  a {
+    color: $blue;
+    font-weight: 500;
+  }
+
+  @media (max-width: $medium) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
