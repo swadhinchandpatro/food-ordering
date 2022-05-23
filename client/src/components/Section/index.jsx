@@ -1,40 +1,49 @@
-import React, { useEffect, useRef } from 'react';
-import Card, { CardSkeleton } from '../Card'
+import React, { useEffect, useRef } from "react";
+import Card, { CardSkeleton } from "../Card";
 import { v4 } from "uuid";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import './styles.scss';
+import "./styles.scss";
+
+const MAX_ALLOWED_CARDS = 5;
 
 const Section = (props) => {
-  const { category, restaurantList = [] } = props.data || {};
+  let { category, restaurantList = [] } = props.data || {};
+  const count = restaurantList.length;
 
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef?.current;
 
-    if(section) {
-      props.observer.observe(section)
+    if (section) {
+      props.observer.observe(section);
     }
     // clean up the observer
-    return (() => {
-      props.observer.unobserve(section)
-    })
-  }, [sectionRef, props.observer])
+    return () => {
+      props.observer.unobserve(section);
+    };
+  }, [sectionRef, props.observer]);
+
+  const Cards = restaurantList
+    .slice(0, MAX_ALLOWED_CARDS)
+    .map(restaurant => <Card key={v4()} withContent={true} {...restaurant} />);
+  if (count > MAX_ALLOWED_CARDS) {
+    const CardNum = <Card key={v4()} itemToLoad={count - MAX_ALLOWED_CARDS} />;
+    Cards.concat(CardNum);
+  }
 
   return (
-    <div className="section">
-      { !props.isShuffled && <h1 className="section__heading" ref={sectionRef} id={props.id} >{category}</h1> }
-      <div className="section__layout grid">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </div>
+    <div className="section" ref={sectionRef} id={props.id}>
+      {!props.isShuffled && (
+        <h1 className="section__heading" >
+          { category }
+        </h1>
+      )}
+      <div className="section__layout grid">{Cards}</div>
     </div>
-  )
-}
+  );
+};
 
 export const SectionSkeleton = () => {
   return (
@@ -48,14 +57,14 @@ export const SectionSkeleton = () => {
         <CardSkeleton />
       </div>
     </div>
-  )
-}
+  );
+};
 
 Section.propTypes = {
   id: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   observer: PropTypes.any.isRequired,
-  isShuffled: PropTypes.bool
-}
+  isShuffled: PropTypes.bool,
+};
 
 export default Section;

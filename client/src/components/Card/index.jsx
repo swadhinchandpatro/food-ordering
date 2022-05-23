@@ -1,60 +1,102 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 import "./styles.scss";
 
-const CardWithContent = () => {
+const CardWithContent = ({
+  image_src,
+  isExlusive,
+  name,
+  food_types,
+  ratings,
+  delivery_time,
+  price_for_two,
+}) => {
   return (
-    <div className="card-layout">
-      <div className="card-layout__img-layout">
-        <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=400&q=60"/>
-      </div>
-      <div class="card-layout__badge"><div class="card-layout__badge__text">Exclusive</div></div>
-      <div className="card-layout__restaurant">
-        <h4>Ivaan Hot paratha</h4>
-        <p className="text-info">Snacks, North Indian</p>
-      </div>
-      <div className="card-layout__info">
-        <div className="rating">
-          <FontAwesomeIcon icon={faStar} size="xs"/>
-          <pre> 4.5</pre>
+    <div className={ isExlusive ? "badge" : "" }>
+      <div className="card-layout">
+        <div className="card-layout__img">
+          <img src={image_src || "#"} />
         </div>
-        <p className="text-info">30 min</p>
-        <div className="text-info"> 200 for two</div>
-      </div>
-      <div className="card-layout__menu">
-        <a href="#" className="menu">Quick View</a>
+        <div className="card-layout__restaurant">
+          <h4>{name}</h4>
+          <p className="text-info">
+            {(food_types && food_types.join(", ")) || ""}
+          </p>
+        </div>
+        <div className="card-layout__info">
+          <div>
+            {ratings ? (
+              <div className="rating">
+                <FontAwesomeIcon icon={faStar} size="xs" />
+                <pre> {ratings}</pre>
+              </div>
+            ) : (
+              <div className="no-rating">
+                <FontAwesomeIcon icon={faStar} size="xs" color="black" />
+                <pre> --</pre>
+              </div>
+            )}
+          </div>
+          <p className="text-info">{delivery_time}</p>
+          <div className="text-info">₹{price_for_two} FOR TWO</div>
+        </div>
+        <div className="card-layout__menu">
+          <a href="#" className="menu">
+            Quick View
+          </a>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const CountCard = () => {
+CardWithContent.propTypes = {
+  image_src: PropTypes.string.isRequired,
+  isExlusive: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  food_types: PropTypes.array.isRequired,
+  ratings: PropTypes.string.isRequired,
+  delivery_time: PropTypes.string.isRequired,
+  price_for_two: PropTypes.number.isRequired,
+};
+
+const CountCard = ({ itemToLoad }) => {
   return (
     <div className="count-card">
-      <div className="text-info">+9</div>
+      <div className="text-info">+{itemToLoad}</div>
     </div>
-  )
-}
+  );
+};
+
+CountCard.propTypes = {
+  itemToLoad: PropTypes.number.isRequired,
+};
 
 const Card = (props) => {
-  return !props.withContent ? <CardWithContent /> : <CountCard />;
-}
+  return props.withContent ? (
+    <CardWithContent {...props} />
+  ) : (
+    <CountCard {...props} />
+  );
+};
+
+Card.propTypes = {
+  withContent: PropTypes.bool,
+  ...CardWithContent.propTypes,
+};
 
 export const CardSkeleton = () => {
   return (
     <div className="card-layout">
-      <div className="img-layout shimmerBG">
-      </div>
-      <div className="shimmer-content shimmerBG">
-      </div>
-      <div className="shimmer-content shimmerBG">
-      </div>
-      <div className="shimmer-content shimmerBG">
-      </div>
+      <div className="img-layout shimmerBG"></div>
+      <div className="shimmer-content shimmerBG"></div>
+      <div className="shimmer-content shimmerBG"></div>
+      <div className="shimmer-content shimmerBG"></div>
     </div>
-  )
-}
+  );
+};
 
 export default Card;

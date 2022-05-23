@@ -33,38 +33,6 @@
     margin-bottom: 0.5em;
   }
 
-  // &__badge {
-  //   position: absolute;
-  //   left: -8px;
-  //   top: 0;
-  //   background-color: #8a584b;
-  //   color: #fff;
-  //   font-size: 13px;
-  //   font-weight: 500;
-  //   padding: 5px 9px 4px;
-  //   max-width: 50%;
-  //   text-transform: uppercase;
-  //   border-color: #8a584b;
-
-  //   &__text {
-  //     text-overflow: ellipsis;
-  //     overflow: hidden;
-  //     white-space: nowrap;
-  //   }
-
-  //   &:before {
-  //     position: absolute;
-  //     bottom: -9px;
-  //     content: "";
-  //     width: 0;
-  //     height: 0;
-  //     border-style: solid;
-  //     border-color: inherit;
-  //     left: 0;
-  //     border-width: 9px 0 0 9px;
-  //   }
-  // }
-
   &:hover {
     border: 1px solid $border-light;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
@@ -92,9 +60,7 @@
   }
 
   .rating {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @extend .center-with-space;
     padding: 5px;
     background-color: rgb(84, 193, 84);
     color: white;
@@ -102,6 +68,12 @@
     border-radius: 5px;
     font-size: small;
   }
+
+  .no-rating {
+    @extend .center-with-space;
+    background-color: transparent;
+  }
+
 }
 
 .count-card {
@@ -109,10 +81,32 @@
   border: 1px solid $border-light;
   line-height: 2em;
   padding: $header-padding;
+  cursor: pointer;
 
   .text-info {
     line-height: 2em;
     font-size: 1.5em;
     color: $orange;
+  }
+}
+
+.badge {
+  &::before {
+    content: 'Exclusive';
+    position: relative;
+    background: linear-gradient(to bottom, $dark-red 0%, $red 100%);
+    color: white;
+    border-radius: 5px;
+    display: block;
+    padding: $box-padding;
+    width: fit-content;
+    font-weight: 500;
+    height: 1em;
+    top: 0.5em;
+    left: 1.4em;
+  }
+
+  .card-layout {
+    margin-top: -2.5em;
   }
 }

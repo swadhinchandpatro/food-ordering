@@ -54,10 +54,11 @@ const NavItemBar = (props) => {
       <Button
         key={v4()}
         selected={
-          (!props.isShuffled && props.category === `section${i}`)
+          (!props.isShuffled && !props.isExlusive && props.category === `section${i}`)
         }
         onClick={(e) => {
           props.omitCategory(false)
+          props.filterExclusive(false)
           scrollIntoView(`section${i}`)
         }}
       >
@@ -70,6 +71,15 @@ const NavItemBar = (props) => {
 
   const headerClass = "nav-item-bar content-padding";
   
+  const ExclusiveButton = (
+    <Button
+      key={v4()}
+      selected={props.isExlusive}
+      onClick={() => props.filterExclusive(true)}
+    >
+      Only on Swiggy
+    </Button>
+  )
   const ViewAllButton = (
     <Button
       key={v4()}
@@ -79,10 +89,11 @@ const NavItemBar = (props) => {
       View All
     </Button>
   );
+  
   const CategoryButtons =
     (
       props.data &&
-      props.data.map((item) => item.category).map(getCategoryButton).concat(ViewAllButton)
+      props.data.map((item) => item.category).map(getCategoryButton).concat(ExclusiveButton, ViewAllButton)
     ) || [];
 
   return (
@@ -92,7 +103,7 @@ const NavItemBar = (props) => {
     >
       <div className="nav-item-bar__container">
         <div className="nav-item-bar__count">
-          <h1>{count} restaurants</h1>
+          <h1>{count} Restaurants</h1>
         </div>
         <div className="nav-item-bar__categories">{CategoryButtons}</div>
       </div>
@@ -105,7 +116,9 @@ NavItemBar.propTypes = {
   category: PropTypes.string.isRequired,
   data: PropTypes.array.isRequired,
   omitCategory: PropTypes.func.isRequired,
-  isShuffled: PropTypes.bool.isRequired,
+  filterExclusive: PropTypes.func,
+  isShuffled: PropTypes.bool,
+  isExlusive: PropTypes.bool,
 };
 
 export default NavItemBar;

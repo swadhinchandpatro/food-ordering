@@ -11,9 +11,20 @@ import PropTypes from 'prop-types';
 import "./app.scss";
 
 const PageLayout = (props) => {
+  let restaurantData = props.data && [...props.data] || [];
+  let restaurantList = [];
+  if(props.isExlusive) {
+    restaurantList = restaurantData && restaurantData.reduce(( flatten, item) => {
+      const filteredRestaurants = item.restaurantList.filter(restaurant => restaurant.isExlusive);
+      return flatten.concat(filteredRestaurants);
+    }, []) || [];
+
+    restaurantData = [{ category: 'Only On Swiggy', restaurantList}];
+  }
+
   const Sections =
-    (props.data &&
-      props.data.map((category, i) => (
+    (restaurantData &&
+      restaurantData.map((category, i) => (
         <Section
           {...props}
           key={v4()}
@@ -29,7 +40,8 @@ const PageLayout = (props) => {
 PageLayout.prototype = {
   data: PropTypes.object.isRequired,
   observer: PropTypes.any.isRequired,
-  isShuffled: PropTypes.bool
+  isShuffled: PropTypes.bool,
+  isExlusive: PropTypes.bool,
 }
 
 const Skeleton = () => {
@@ -41,10 +53,11 @@ const Skeleton = () => {
 };
 
 const App = () => {
-  const [category, setCategory] = useState("section1");
+  const [category, setCategory] = useState("section0");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isShuffled, setShuffled] = useState(false);
+  const [isExlusive, setExlusive] = useState(false);
 
   let observer = new IntersectionObserver(
     (entries) => {
@@ -58,7 +71,7 @@ const App = () => {
     },
     {
       rootMargin: "30px 0px -50% 0px",
-      threshold: 1,
+      threshold: 0,
     }
   );
 
@@ -84,11 +97,14 @@ const App = () => {
             category={category}
             omitCategory={setShuffled}
             isShuffled={isShuffled}
+            filterExclusive={setExlusive}
+            isExlusive={isExlusive}
           />
           <PageLayout
             data={data}
             observer={observer}
             isShuffled={isShuffled}
+            isExlusive={isExlusive}
           />
         </>
       )}
