@@ -26,7 +26,6 @@ const CardWithContent = () => {
       <div className="card-layout__menu">
         <a href="#" className="menu">Quick View</a>
       </div>
-      <div></div>
     </div>
   )
 }
@@ -41,6 +40,21 @@ const CountCard = () => {
 
 const Card = (props) => {
   return !props.withContent ? <CardWithContent /> : <CountCard />;
+}
+
+export const CardSkeleton = () => {
+  return (
+    <div className="card-layout">
+      <div className="img-layout shimmerBG">
+      </div>
+      <div className="shimmer-content shimmerBG">
+      </div>
+      <div className="shimmer-content shimmerBG">
+      </div>
+      <div className="shimmer-content shimmerBG">
+      </div>
+    </div>
+  )
 }
 
 export default Card;

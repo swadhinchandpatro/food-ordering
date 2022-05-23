@@ -13,6 +13,7 @@ $orange: #fc8019;
 $unselected: #3d4152;
 $selected: #0f1014;
 $border-light: #0a090941;
+$border-dim: #b1adad41;
 $blue: rgba(27, 75, 220, 0.848);
 
 //alignments
@@ -30,4 +31,41 @@ $blue: rgba(27, 75, 220, 0.848);
 .baseline-with-space {
   @extend .center-with-space;
   align-items: baseline;
+}
+
+.shimmerBG {
+  animation-duration: 2.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: #ddd;
+  background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+  background-size: 1200px 100%;
+}
+
+.shimmer-content {
+  height: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1200px 0;
+  }
+
+  100% {
+    background-position: 1200px 0;
+  }
 }

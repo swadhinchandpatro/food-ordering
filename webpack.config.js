@@ -7,6 +7,9 @@ module.exports = {
     path: path.join(__dirname, '/client/dist'),
     filename: 'bundle.js'
   },
+  devServer: {
+    contentBase: './client/dist',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './server/views/index.html'

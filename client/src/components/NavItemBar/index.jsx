@@ -1,17 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import Button from '../Buttons';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import Button from "../Buttons";
+import { v4 } from "uuid";
+import PropTypes from "prop-types";
 
-import './styles.scss';
+import "./styles.scss";
 
-const scrollIntoView = (e, viewId) => {
+const scrollIntoView = (viewId) => {
   const view = document.getElementById(viewId);
   const pageYOffset = view.offsetTop;
   window.scrollTo({
-    top: pageYOffset,
+    top: pageYOffset - document.getElementById(viewId).offsetHeight,
     left: 0,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
-}
+};
+
+const calculateRestaurants = (data = []) => {
+  return data.reduce((sum, item) => {
+    const categoryCount = item.restaurantList && item.restaurantList.length;
+    return sum + categoryCount;
+  }, 0);
+};
 
 const NavItemBar = (props) => {
   const [isSticky, setIsSticky] = useState(false);
@@ -21,40 +30,82 @@ const NavItemBar = (props) => {
     const header = headerRef?.current;
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           setIsSticky(!entry.isIntersecting);
-        })
+        });
       },
       {
-        rootMargin: `${document.querySelector('header').offsetHeight * -1}px`,
-        threshold: 0
+        rootMargin: `${document.querySelector("header").offsetHeight * -1}px`,
+        threshold: 0,
       }
     );
 
-    if(header) {
-      observer.observe(header)
+    if (header) {
+      observer.observe(header);
     }
     // clean up the observer
-    return (() => {
-      observer.unobserve(header)
-    })
-  }, [headerRef])
+    return () => {
+      observer.unobserve(header);
+    };
+  }, [headerRef]);
+
+  const getCategoryButton = (category, i) => {
+    return (
+      <Button
+        key={v4()}
+        selected={
+          (!props.isShuffled && props.category === `section${i}`)
+        }
+        onClick={(e) => {
+          props.omitCategory(false)
+          scrollIntoView(`section${i}`)
+        }}
+      >
+        {category}
+      </Button>
+    );
+  };
+
+  const count = useMemo(() => calculateRestaurants(props.data), [props.data]);
 
   const headerClass = "nav-item-bar content-padding";
   
+  const ViewAllButton = (
+    <Button
+      key={v4()}
+      selected={props.isShuffled}
+      onClick={() => props.omitCategory(true)}
+    >
+      View All
+    </Button>
+  );
+  const CategoryButtons =
+    (
+      props.data &&
+      props.data.map((item) => item.category).map(getCategoryButton).concat(ViewAllButton)
+    ) || [];
+
   return (
-    <div ref={headerRef} className={isSticky ? `${headerClass} sticky` : headerClass}>
+    <div
+      ref={headerRef}
+      className={isSticky ? `${headerClass} sticky` : headerClass}
+    >
       <div className="nav-item-bar__container">
-        <div className="nav-item-bar__count"><h1>515 restaurants</h1></div>
-        <div className="nav-item-bar__categories">
-          <Button selected={props.category === "section1"} data-target-id="section1" onClick={(e) => scrollIntoView(e, "section1")}>Relevance</Button>
-          <Button selected={props.category === "section2"} data-target-id="section2" onClick={(e) => scrollIntoView(e, "section2")}>Delivery Time</Button>
-          <Button selected={props.category === "section3"} data-target-id="section3" onClick={(e) => scrollIntoView(e, "section3")}>Rating</Button>
+        <div className="nav-item-bar__count">
+          <h1>{count} restaurants</h1>
         </div>
+        <div className="nav-item-bar__categories">{CategoryButtons}</div>
       </div>
       <hr></hr>
     </div>
-  )
-}
+  );
+};
+
+NavItemBar.propTypes = {
+  category: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired,
+  omitCategory: PropTypes.func.isRequired,
+  isShuffled: PropTypes.bool.isRequired,
+};
 
 export default NavItemBar;
