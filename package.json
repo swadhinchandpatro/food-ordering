@@ -3,7 +3,8 @@
   "scripts": {
     "start:webpack": "webpack-dev-server --mode development --open --hot",
     "start": "nodemon --exec babel-node server/index.js",
-    "build": "webpack --watch --mode development"
+    "build": "webpack --watch --mode development",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@babel/runtime": "^7.18.0",
@@ -24,9 +25,14 @@
     "@babel/node": "^7.17.10",
     "@babel/preset-env": "^7.18.0",
     "@babel/preset-react": "^7.17.12",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.5.1",
+    "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
     "sass": "^1.52.1",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",
