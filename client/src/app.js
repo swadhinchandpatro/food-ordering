@@ -1,5 +1,5 @@
 import ReactDom from "react-dom";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, memo, useEffect, useMemo } from "react";
 import { v4 } from "uuid";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import "./app.scss";
 
 const PageLayout = (props) => {
+  console.log("rendered bro")
   let restaurantData = props.data && [...props.data] || [];
   let restaurantList = [];
   if(props.isExlusive) {
@@ -44,6 +45,8 @@ PageLayout.prototype = {
   isExlusive: PropTypes.bool,
 }
 
+const PageLayoutMemoised = memo(PageLayout);
+
 const Skeleton = () => {
   return (
     <div className="page-layout content-padding">
@@ -59,7 +62,7 @@ const App = () => {
   const [isShuffled, setShuffled] = useState(false);
   const [isExlusive, setExlusive] = useState(false);
 
-  let observer = new IntersectionObserver(
+  let observer = useMemo(() => new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         setCategory((category) =>
@@ -73,7 +76,7 @@ const App = () => {
       rootMargin: "30px 0px -50% 0px",
       threshold: 0,
     }
-  );
+  ), []);
 
   useEffect(() => {
     async function fetchRestaurants() {
@@ -100,7 +103,7 @@ const App = () => {
             filterExclusive={setExlusive}
             isExlusive={isExlusive}
           />
-          <PageLayout
+          <PageLayoutMemoised
             data={data}
             observer={observer}
             isShuffled={isShuffled}

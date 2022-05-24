@@ -63,9 +63,9 @@ CardWithContent.propTypes = {
   price_for_two: PropTypes.number.isRequired,
 };
 
-const CountCard = ({ itemToLoad }) => {
+const CountCard = ({ itemToLoad, onClick }) => {
   return (
-    <div className="count-card">
+    <div className="count-card" onClick={onClick}>
       <div className="text-info">+{itemToLoad}</div>
     </div>
   );

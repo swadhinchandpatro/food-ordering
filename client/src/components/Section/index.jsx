@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, memo } from "react";
 import Card, { CardSkeleton } from "../Card";
 import { v4 } from "uuid";
 import PropTypes from "prop-types";
 
 import "./styles.scss";
 
-const MAX_ALLOWED_CARDS = 5;
+const DEFAULT_CARD_LIMIT = 5;
 
 const Section = (props) => {
+  const [maxAllowedCards, setMaxAllowedCards] = useState(DEFAULT_CARD_LIMIT);
   let { category, restaurantList = [] } = props.data || {};
   const count = restaurantList.length;
 
@@ -26,12 +27,8 @@ const Section = (props) => {
   }, [sectionRef, props.observer]);
 
   const Cards = restaurantList
-    .slice(0, MAX_ALLOWED_CARDS)
+    .slice(0, maxAllowedCards)
     .map(restaurant => <Card key={v4()} withContent={true} {...restaurant} />);
-  if (count > MAX_ALLOWED_CARDS) {
-    const CardNum = <Card key={v4()} itemToLoad={count - MAX_ALLOWED_CARDS} />;
-    Cards.concat(CardNum);
-  }
 
   return (
     <div className="section" ref={sectionRef} id={props.id}>
@@ -40,7 +37,10 @@ const Section = (props) => {
           { category }
         </h1>
       )}
-      <div className="section__layout grid">{Cards}</div>
+      <div className="section__layout grid">
+        {Cards}
+        { count > maxAllowedCards && <Card key={v4()} onClick={() => setMaxAllowedCards(cards => cards + DEFAULT_CARD_LIMIT)} itemToLoad={count - maxAllowedCards} /> }
+      </div>
     </div>
   );
 };
@@ -67,4 +67,4 @@ Section.propTypes = {
   isShuffled: PropTypes.bool,
 };
 
-export default Section;
+export default memo(Section);

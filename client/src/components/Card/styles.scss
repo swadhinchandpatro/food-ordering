@@ -82,6 +82,10 @@
   line-height: 2em;
   padding: $header-padding;
   cursor: pointer;
+  margin-top: $header-padding;
+  margin-left: $header-padding;
+  margin-right: $header-padding;
+  height: 70%;
 
   .text-info {
     line-height: 2em;
