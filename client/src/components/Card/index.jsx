@@ -18,7 +18,7 @@ const CardWithContent = ({
     <div className={ isExlusive ? "badge" : "" }>
       <div className="card-layout">
         <div className="card-layout__img">
-          <img src={image_src || "#"} />
+          <img loading="lazy" src={image_src || "#"} />
         </div>
         <div className="card-layout__restaurant">
           <h4>{name}</h4>
