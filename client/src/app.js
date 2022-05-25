@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import "./app.scss";
 
 const PageLayout = (props) => {
-  console.log("rendered bro")
   let restaurantData = props.data && [...props.data] || [];
   let restaurantList = [];
   if(props.isExlusive) {
@@ -73,7 +72,7 @@ const App = () => {
       });
     },
     {
-      rootMargin: "30px 0px -50% 0px",
+      rootMargin: "40% 0px -50% 0px",
       threshold: 0,
     }
   ), []);

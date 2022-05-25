@@ -12,7 +12,7 @@ const Button = (props) => {
 }
 
 Button.propTypes = {
-  onClick: PropTypes.func.required,
+  onClick: PropTypes.func.isRequired,
   selected: PropTypes.bool
 }
 

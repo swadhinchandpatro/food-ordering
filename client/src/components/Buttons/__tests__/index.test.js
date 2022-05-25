@@ -6,7 +6,6 @@ import Button from '../index'
 describe('Button Component', () => {
   it('render button without selection', () => {
     const { container } = render(<Button onClick={() => {}}/>)
-    console.log(container)
     expect(container.getElementsByClassName('selected').length).toBe(0)
   })
 

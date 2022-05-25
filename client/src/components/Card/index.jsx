@@ -22,14 +22,14 @@ const CardWithContent = ({
         </div>
         <div className="card-layout__restaurant">
           <h4>{name}</h4>
-          <p className="text-info">
+          <p data-testid="food-types" className="text-info">
             {(food_types && food_types.join(", ")) || ""}
           </p>
         </div>
         <div className="card-layout__info">
           <div>
             {ratings ? (
-              <div className="rating">
+              <div data-testid="rating" className="rating">
                 <FontAwesomeIcon icon={faStar} size="xs" />
                 <pre> {ratings}</pre>
               </div>
@@ -73,6 +73,7 @@ const CountCard = ({ itemToLoad, onClick }) => {
 
 CountCard.propTypes = {
   itemToLoad: PropTypes.number.isRequired,
+  onClick: PropTypes.func
 };
 
 const Card = (props) => {
@@ -84,8 +85,7 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  withContent: PropTypes.bool,
-  ...CardWithContent.propTypes,
+  withContent: PropTypes.bool
 };
 
 export const CardSkeleton = () => {
