@@ -9,7 +9,7 @@ const scrollIntoView = (viewId) => {
   const view = document.getElementById(viewId);
   const pageYOffset = view.offsetTop;
   window.scrollTo({
-    top: pageYOffset - document.getElementById(viewId).offsetHeight,
+    top: pageYOffset - document.getElementById('nav').offsetHeight,
     left: 0,
     behavior: "smooth",
   });
@@ -98,6 +98,7 @@ const NavItemBar = (props) => {
 
   return (
     <div
+      id="nav"
       ref={headerRef}
       className={isSticky ? `${headerClass} sticky` : headerClass}
     >
